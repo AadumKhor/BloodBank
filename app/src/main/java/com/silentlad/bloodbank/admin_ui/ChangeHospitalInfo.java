@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.silentlad.bloodbank.R;
+import com.silentlad.bloodbank.data.Result;
 import com.silentlad.bloodbank.data.databasehelper.DatabaseHelper_Hospitals;
 
 public class ChangeHospitalInfo extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class ChangeHospitalInfo extends AppCompatActivity {
     private EditText gmaps_edit;
     private EditText working_hours_edit;
     private Button changeButton;
+    private Button deleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,18 @@ public class ChangeHospitalInfo extends AppCompatActivity {
         String workingHours = getIntent().getStringExtra("startTime")+ "-" + getIntent().getStringExtra("endTime");
         working_hours_edit.setText(workingHours);
         gmaps_edit.setText(getIntent().getStringExtra("gmaps"));
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(db.deleteData(getIntent().getStringExtra("id")) instanceof Result.Success){
+                    Toast.makeText(getApplicationContext(), "Deleted.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Could not delete hospital.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,5 +78,6 @@ public class ChangeHospitalInfo extends AppCompatActivity {
         working_hours_edit = findViewById(R.id.change_working_hours);
         gmaps_edit = findViewById(R.id.change_gmaps);
         changeButton = findViewById(R.id.change_button);
+        deleteButton = findViewById(R.id.change_delete_button);
     }
 }

@@ -32,26 +32,26 @@ public class AppointmentsViewModel extends ViewModel {
     }
 
     public void init(){
-        populateList();
+//        populateList();
         liveHospitalList.setValue(hospitalList);
     }
 
-    public void populateList(){
-        Cursor cursor = databaseHelper_appointments.getData();
-
-        if (cursor.getCount() == 0) {
-            return;
-        } else {
-            while (cursor.moveToNext()) {
-//                appointmentList.add(new AppointmentCard(
-//                        cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID)),
-//                        R.drawable.ic_dashboard_black_24dp,
-//                        cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID)),
-//                        cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME)),
-//                        cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE))
-
-//                ));
-            }
-        }
-    }
+//    public void populateList(){
+//        Cursor cursor = databaseHelper_appointments.getData();
+//
+//        if (cursor.getCount() == 0) {
+//            return;
+//        } else {
+//            while (cursor.moveToNext()) {
+////                appointmentList.add(new AppointmentCard(
+////                        cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID)),
+////                        R.drawable.ic_dashboard_black_24dp,
+////                        cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID)),
+////                        cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME)),
+////                        cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE))
+//
+////                ));
+//            }
+//        }
+//    }
 }

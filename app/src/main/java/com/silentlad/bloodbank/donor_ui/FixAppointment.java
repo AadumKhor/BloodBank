@@ -2,6 +2,7 @@ package com.silentlad.bloodbank.donor_ui;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -22,7 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silentlad.bloodbank.R;
+import com.silentlad.bloodbank.data.Result;
 import com.silentlad.bloodbank.data.databasehelper.DatabaseHelper_Appointments;
+import com.silentlad.bloodbank.data.model.DonorLoggedInUser;
+import com.silentlad.bloodbank.donor_ui.donorLogin.DonorLoginViewModel;
+import com.silentlad.bloodbank.donor_ui.donorLogin.DonorLoginViewModelFactory;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -40,10 +45,17 @@ public class FixAppointment extends AppCompatActivity {
 
     private DatabaseHelper_Appointments db_app;
 
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.d_activity_fix_appointment);
+        DonorLoginViewModel donorLoginViewModel = ViewModelProviders.of(this,
+                new DonorLoginViewModelFactory()).get(DonorLoginViewModel.class);
+
+        DonorLoggedInUser loggedInUser = donorLoginViewModel.getLoggedInUser();
+        userId = loggedInUser.getDonorId();
         // getting data sent with intent
         String hospitalName = getIntent().getStringExtra("name");
         String city = getIntent().getStringExtra("city");
@@ -118,8 +130,8 @@ public class FixAppointment extends AppCompatActivity {
                 assert hosId != null;
                 boolean isDataFilled = !id.equals("") && !hosId.equals("") &&
                         !date.equals("") && !time.equals("");
-
-                if (isDataFilled && db_app.insert(id, hosId, time, date)) {
+                boolean insertData = db_app.insert(id, hosId, userId, time, date) instanceof Result.Success;
+                if (isDataFilled && insertData) {
                     Toast.makeText(getApplicationContext(), "Appointment Made.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Appointment cannot be Made.", Toast.LENGTH_SHORT).show();

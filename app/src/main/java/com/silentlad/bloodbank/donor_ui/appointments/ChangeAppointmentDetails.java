@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silentlad.bloodbank.R;
+import com.silentlad.bloodbank.data.Result;
 import com.silentlad.bloodbank.data.databasehelper.DatabaseHelper_Appointments;
 import com.silentlad.bloodbank.donor_ui.FixAppointment;
 
@@ -88,8 +89,8 @@ public class ChangeAppointmentDetails extends AppCompatActivity {
                 String newDate = datePickText.getText().toString();
 
                 boolean isDataValid = !newTime.equals("") && !newDate.equals("");
-
-                if (isDataValid && db.updateData(id, newDate, newTime)) {
+                boolean updateData = db.updateData(id, newDate, newTime) instanceof Result.Success;
+                if (isDataValid && updateData) {
                     Toast.makeText(getApplicationContext(), "Appointment updated.", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {

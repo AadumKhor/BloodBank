@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.silentlad.bloodbank.data.AppointmentContract.*;
+import com.silentlad.bloodbank.data.Result;
+
+import java.io.IOException;
 
 public class DatabaseHelper_Appointments extends SQLiteOpenHelper {
 
@@ -17,6 +20,7 @@ public class DatabaseHelper_Appointments extends SQLiteOpenHelper {
     private static final String CREATE_TABLE = "CREATE TABLE " + AppointmentEntry.TABLE_NAME + "(" +
             AppointmentEntry.COLUMN_ID + " TEXT PRIMARY KEY, " +
             AppointmentEntry.COLUMN_HOSPITAL_ID + " TEXT NOT NULL, " +
+            AppointmentEntry.COLUMN_USER_ID + " TEXT NOT NULL, " +
             AppointmentEntry.COLUMN_TIME + " TEXT NOT NULL, " +
             AppointmentEntry.COLUMN_DATE + " TEXT NOT NULL" + ")";
 
@@ -37,40 +41,48 @@ public class DatabaseHelper_Appointments extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insert(String id, String hospitalId, String time, String date) {
+    public Result insert(String id, String hospitalId, String userId, String time, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(AppointmentEntry.COLUMN_ID, id);
         contentValues.put(AppointmentEntry.COLUMN_HOSPITAL_ID, hospitalId);
+        contentValues.put(AppointmentEntry.COLUMN_USER_ID, userId);
         contentValues.put(AppointmentEntry.COLUMN_TIME, time);
         contentValues.put(AppointmentEntry.COLUMN_DATE, date);
 
         long result = db.insert(AppointmentEntry.TABLE_NAME, null, contentValues);
-        return result != -1;
+        if (result != -1) {
+            return new Result.Success<>("Data inserted");
+        } else {
+            return new Result.Error(new IOException("Data not inserted"));
+        }
     }
 
-    public boolean updateData(String appointmentId, String newDate, String newTime) {
+    public Result updateData(String appointmentId, String newDate, String newTime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(AppointmentEntry.COLUMN_TIME, newTime);
         cv.put(AppointmentEntry.COLUMN_DATE, newDate);
 
-        long result = db.update(AppointmentEntry.TABLE_NAME, cv, "appointmentId=?", new String[]{appointmentId});
-
-        return result != -1;
+        try{
+            db.update(AppointmentEntry.TABLE_NAME, cv, "appointmentId=?", new String[]{appointmentId});
+            return new Result.Success<>("Updated data.");
+        }catch (Exception e){
+            return new Result.Error(new IOException("Not updated."));
+        }
     }
 
-    public void removeItem(String id){
-        SQLiteDatabase db= this.getWritableDatabase();
+    public void removeItem(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
         db.delete(AppointmentEntry.TABLE_NAME, "appointmentId=?", new String[]{id});
     }
 
-    public Cursor getData() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + AppointmentEntry.TABLE_NAME;
-        return db.rawQuery(query, null);
-    }
 
+    public Cursor getData(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + AppointmentEntry.TABLE_NAME + " WHERE userId=?";
+        return db.rawQuery(query, new String[]{id});
+    }
 }

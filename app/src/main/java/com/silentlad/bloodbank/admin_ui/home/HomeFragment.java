@@ -72,28 +72,6 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         return root;
     }
 
-//    private void viewData() {
-//        Cursor cursor = db.viewData();
-//
-//        if (cursor.getCount() == 0) {
-//            Toast.makeText(getContext(), "No data to show", Toast.LENGTH_SHORT).show();
-//
-//        } else {
-//            while (cursor.moveToNext()) {
-//                hospitalList.add(new HospitalCard(cursor.getString(cursor.getColumnIndex(HospitalContract.HospitalEntry.COLUMN_ID)),
-//                        R.drawable.ic_local_hospital_black_24dp,
-//                        cursor.getString(cursor.getColumnIndex(HospitalContract.HospitalEntry.COLUMN_NAME)),
-//                        cursor.getString(cursor.getColumnIndex(HospitalContract.HospitalEntry.COLUMN_CITY)),
-//                        new String[]{cursor.getString(cursor.getColumnIndex(HospitalContract.HospitalEntry.COLUMN_START_DAY)),
-//                                cursor.getString(cursor.getColumnIndex(HospitalContract.HospitalEntry.COLUMN_END_DAY))},
-//                        new String[]{cursor.getString(cursor.getColumnIndex(HospitalContract.HospitalEntry.COLUMN_START_TIME)),
-//                                cursor.getString(cursor.getColumnIndex(HospitalContract.HospitalEntry.COLUMN_END_TIME))},
-//                        cursor.getString(cursor.getColumnIndex(HospitalContract.HospitalEntry.COLUMN_GMAPS))
-//                ));
-//            }
-//        }
-//    }
-
     private void buildRecyclerView(View root, final NhRvAdapter mAdapter) {
         mRecyclerView = root.findViewById(R.id.admin_hospitals);
         mRecyclerView.setHasFixedSize(true);
@@ -104,7 +82,8 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             @Override
             public void onItemClick(int position) {
 
-                String id = mRecyclerView.findViewHolderForAdapterPosition(position).itemView.getTag().toString();
+                String id = Objects.requireNonNull(mRecyclerView.findViewHolderForAdapterPosition(position)).
+                        itemView.getTag().toString();
                 Log.println(Log.DEBUG, "id", id);
                 String[] currentItem = db.getDetailsAdmin(id);
                 Log.println(Log.DEBUG, "id", String.valueOf(position));

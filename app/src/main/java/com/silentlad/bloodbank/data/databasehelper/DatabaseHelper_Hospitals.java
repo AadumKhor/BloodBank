@@ -10,6 +10,8 @@ import android.util.Log;
 import com.silentlad.bloodbank.data.HospitalContract.*;
 import com.silentlad.bloodbank.data.Result;
 
+import java.io.IOException;
+
 public class DatabaseHelper_Hospitals extends SQLiteOpenHelper {
     private static final String DB_NAME = "Hospital.db";
     private static final int DATABASE_VERSION = 1;
@@ -116,25 +118,28 @@ public class DatabaseHelper_Hospitals extends SQLiteOpenHelper {
         return result;
     }
 
-    public String[] getHospitalDetailsAppointments(String id) {
+    public Result getHospitalDetailsAppointments(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT name,city,gmap FROM " + HospitalEntry.TABLE_NAME + " where id=?";
         Log.println(Log.DEBUG, "ID", "query made");
         Cursor cursor = db.rawQuery(query, new String[]{id});
         Log.println(Log.DEBUG, "ID", "cursor and query both made");
         Log.println(Log.DEBUG, "ID", String.valueOf(cursor.getCount()));
-        String[] result = new String[3];
-        while (cursor.moveToNext()) {
-            result[0] = cursor.getString(cursor.getColumnIndex(HospitalEntry.COLUMN_NAME));
-            result[1] = cursor.getString(cursor.getColumnIndex(HospitalEntry.COLUMN_CITY));
-            result[2] = cursor.getString(cursor.getColumnIndex(HospitalEntry.COLUMN_GMAPS));
+        if (cursor.getCount() > 0) {
+            String[] result = new String[3];
+            while (cursor.moveToNext()) {
+                result[0] = cursor.getString(cursor.getColumnIndex(HospitalEntry.COLUMN_NAME));
+                result[1] = cursor.getString(cursor.getColumnIndex(HospitalEntry.COLUMN_CITY));
+                result[2] = cursor.getString(cursor.getColumnIndex(HospitalEntry.COLUMN_GMAPS));
+            }
+            Log.println(Log.DEBUG, "ID", result[0]);
+            Log.println(Log.DEBUG, "ID", result[1]);
+            Log.println(Log.DEBUG, "ID", result[2]);
+            cursor.close();
+            return new Result.Success<>(result);
+        } else {
+            return new Result.Error(new Exception("No data available"));
         }
-        Log.println(Log.DEBUG, "ID", result[0]);
-        Log.println(Log.DEBUG, "ID", result[1]);
-        Log.println(Log.DEBUG, "ID", result[2]);
-
-        cursor.close();
-        return result;
     }
 
     public Result deleteData(String id) {

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.silentlad.bloodbank.R;
 import com.silentlad.bloodbank.data.AppointmentContract;
+import com.silentlad.bloodbank.data.Result;
 import com.silentlad.bloodbank.data.databasehelper.DatabaseHelper_Appointments;
 import com.silentlad.bloodbank.data.databasehelper.DatabaseHelper_Hospitals;
 
@@ -22,7 +23,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewholder> {
     private Cursor mCursorApp;
     private DatabaseHelper_Hospitals mDb_hos;
     private DatabaseHelper_Appointments mDb_app;
-//    private String[] mDetails;
 
     // transfer all data from external list to our list
     public RVAdapter(Cursor cursor, DatabaseHelper_Hospitals db_hos, DatabaseHelper_Appointments db_app) {
@@ -84,26 +84,32 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewholder> {
         if (!mCursorApp.moveToPosition(position)) {
             return;
         }
-
-        final String hospitalId = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID));
-        final String[] details = mDb_hos.getHospitalDetailsAppointments(hospitalId);
-        final String time = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME));
-        final String date = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE));
         final String id = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID));
+        final String hospitalId = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID));
+        final Result result = mDb_hos.getHospitalDetailsAppointments(hospitalId);
 
-        holder.mHospitalName.setText(details[0]);
-        holder.mCity.setText(details[1]);
-        holder.mDate.setText(date);
-        holder.mStartingTime.setText(time);
-        holder.mImageView.setImageResource(R.drawable.ic_local_hospital_black_24dp);
-        holder.mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDb_app.removeItem(id);
-            }
-        });
-        // set id as tag for the whole view
-        holder.itemView.setTag(id);
+        if (result instanceof Result.Success) {
+            String[] details = (String[]) ((Result.Success) result).getData();
+            final String time = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME));
+            final String date = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE));
+
+            holder.mHospitalName.setText(details[0]);
+            holder.mCity.setText(details[1]);
+            holder.mDate.setText(date);
+            holder.mStartingTime.setText(time);
+            holder.mImageView.setImageResource(R.drawable.ic_local_hospital_black_24dp);
+            holder.mButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDb_app.removeItem(id);
+                }
+            });
+            // set id as tag for the whole view
+            holder.itemView.setTag(id);
+        } else {
+            mDb_app.removeItem(id);
+        }
+
     }
 
     @Override

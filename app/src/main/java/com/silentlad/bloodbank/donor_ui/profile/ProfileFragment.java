@@ -25,7 +25,6 @@ import com.silentlad.bloodbank.donor_ui.donorLogin.DonorLoginViewModelFactory;
 
 import java.util.Objects;
 
-//import com.silentlad.bloodbank.donor_ui.R;
 
 public class ProfileFragment extends Fragment {
     private String id;
@@ -49,13 +48,11 @@ public class ProfileFragment extends Fragment {
         final Button confirm_button = root.findViewById(R.id.confirm_button);
 
         db = new DatabaseHelper_Users(getContext());
-        DonorLoginViewModel donorLoginViewModel = ViewModelProviders.of(this, new DonorLoginViewModelFactory()).get(DonorLoginViewModel.class);
+        DonorLoginViewModel donorLoginViewModel = ViewModelProviders.of(this,
+                new DonorLoginViewModelFactory()).get(DonorLoginViewModel.class);
 
-        Log.println(Log.DEBUG, "id", "viewmodel done");
         DonorLoggedInUser loggedInUser = donorLoginViewModel.getLoggedInUser();
-        Log.println(Log.DEBUG, "id", "got user");
         id = loggedInUser.getDonorId();
-        Log.println(Log.DEBUG, "id", id);
 
         // EDIT FIELDS
 
@@ -82,11 +79,10 @@ public class ProfileFragment extends Fragment {
                         city_edit.getText().toString().trim()
                 );
 
-                if(result instanceof Result.Success){
+                if (result instanceof Result.Success) {
                     Toast toast = Toast.makeText(getContext(), "Details Updated", Toast.LENGTH_SHORT);
                     toast.show();
-                }
-                else{
+                } else {
                     Toast toast = Toast.makeText(getContext(), "Could not update details", Toast.LENGTH_SHORT);
                     toast.show();
                 }
@@ -98,9 +94,9 @@ public class ProfileFragment extends Fragment {
     private void setTexts() {
         Result result = db.getData(id);
         Log.println(Log.DEBUG, "id", "Outside if");
-        if(result instanceof  Result.Success){
+        if (result instanceof Result.Success) {
             Log.println(Log.DEBUG, "id", "Inside setTexts if");
-            String[] array = (String[])((Result.Success) result).getData();
+            String[] array = (String[]) ((Result.Success) result).getData();
 
             name_edit.setText(array[0]);
             phone_edit.setText(array[1]);
@@ -109,14 +105,14 @@ public class ProfileFragment extends Fragment {
 
             int bgPos = 0, weightPos = 0;
 
-            for(int i = 0; i < blood_groups.length ; i++){
-                if(blood_groups[i].equals(array[5])){
+            for (int i = 0; i < blood_groups.length; i++) {
+                if (blood_groups[i].equals(array[5])) {
                     bgPos = i;
                 }
             }
 
-            for(int i = 0; i < weight_options.length ; i++){
-                if(blood_groups[i].equals(array[4])){
+            for (int i = 0; i < weight_options.length; i++) {
+                if (blood_groups[i].equals(array[4])) {
                     weightPos = i;
                 }
             }
