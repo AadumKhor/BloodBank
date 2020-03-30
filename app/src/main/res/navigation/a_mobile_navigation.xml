@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/a_mobile_navigation"
+    app:startDestination="@id/all_hospitals">
+
+    <fragment
+        android:id="@+id/all_hospitals"
+        android:name="com.silentlad.bloodbank.admin_ui.home.HomeFragment"
+        android:label="@string/title_hospital"
+        tools:layout="@layout/a_fragment_hospitals" />
+
+    <fragment
+        android:id="@+id/add_hospital"
+        android:name="com.silentlad.bloodbank.admin_ui.addNewHospital.AddHospitalFragment"
+        android:label="@string/title_add_hospital"
+        tools:layout="@layout/a_fragment_add" />
+</navigation>

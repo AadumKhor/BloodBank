@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.silentlad.bloodbank">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".donor_ui.appointments.ChangeAppointmentDetails" />
+        <activity android:name=".admin_ui.ChangeHospitalInfo" />
+        <activity android:name=".donor_ui.FixAppointment" /> <!-- donor home screen -->
+        <activity
+            android:name=".donor_ui.DonorHomeScreen"
+            android:label="@string/title_activity_donor_home_screen"
+            android:windowSoftInputMode="adjustPan" /> <!-- donor login leads to signup -->
+        <activity
+            android:name=".donor_ui.donorLogin.SignUpActivity"
+            android:label="@string/sign_up"
+            android:windowSoftInputMode="adjustPan" /> <!-- donor login -->
+        <activity
+            android:name=".donor_ui.donorLogin.DonorLogin"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan" /> <!-- main activity -->
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- admin home screen -->
+        <activity
+            android:name=".admin_ui.AdminHomeScreen"
+            android:label="@string/title_activity_admin_home_screen"
+            android:windowSoftInputMode="adjustPan" /> <!-- admin login activity -->
+        <activity
+            android:name=".admin_ui.login.LoginActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan" />
+    </application>
+
+</manifest>

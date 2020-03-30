@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/profile" />
+
+    <item
+        android:id="@+id/nearby_hospitals"
+        android:icon="@drawable/ic_local_hospital_black_24dp"
+        android:title="@string/nearby_hospitals" />
+
+    <item
+        android:id="@+id/appointments"
+        android:icon="@drawable/ic_access_alarm_black_24dp"
+        android:title="@string/appointments" />
+
+    <item
+        android:id="@+id/info"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="@string/info" />
+
+</menu>

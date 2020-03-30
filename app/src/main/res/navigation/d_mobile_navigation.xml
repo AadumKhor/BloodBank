@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/d_mobile_navigation"
+    app:startDestination="@id/nearby_hospitals">
+
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.silentlad.bloodbank.donor_ui.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/d_fragment_profile" />
+    <fragment
+        android:id="@+id/nearby_hospitals"
+        android:name="com.silentlad.bloodbank.donor_ui.nearbyHospitals.NearbyHospitalFragment"
+        android:label="@string/nearby_hospitals"
+        tools:layout="@layout/d_fragment_hospitals" />
+    <fragment
+        android:id="@+id/appointments"
+        android:name="com.silentlad.bloodbank.donor_ui.appointments.AppointmentsFragment"
+        android:label="@string/appointments"
+        tools:layout="@layout/d_fragment_appointments" />
+    <fragment
+        android:id="@+id/info"
+        android:name="com.silentlad.bloodbank.donor_ui.info.InformationFragment"
+        android:label="@string/info"
+        tools:layout="@layout/d_fragment_info" />
+</navigation>
