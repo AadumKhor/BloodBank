@@ -120,11 +120,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
+        String welcome = getString(R.string.welcome) + " " + model.getDisplayName();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         // go  to next screen after validating.
-        // TODO: add validation logic
         Intent admin_intent = new Intent(this, AdminHomeScreen.class);
         startActivity(admin_intent);
         finish();

@@ -29,11 +29,4 @@ public class AdminHomeScreen extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    public void navigateToFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .add(getTaskId(), fragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
 }
