@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layoutDirection="ltr"
     android:layout_height="match_parent"
     tools:context=".donor_ui.donorLogin.DonorLogin">
 
@@ -11,7 +12,7 @@
         android:layout_width="350dp"
         android:layout_height="40dp"
         android:ems="10"
-        android:hint="@string/enter_your_phone_number"
+        android:hint="@string/enter_name"
         android:importantForAutofill="no"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"

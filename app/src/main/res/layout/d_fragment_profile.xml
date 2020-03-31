@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layoutDirection="ltr"
     android:layout_height="match_parent"
     app:layout_constraintVertical_bias="0.1"
     tools:context=".donor_ui.profile.ProfileFragment">
     <!--     name edit -->
+
     <TextView
         android:id="@+id/name"
         android:layout_width="100dp"
@@ -14,11 +16,11 @@
         android:gravity="center_vertical"
         android:text="@string/name"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintEnd_toStartOf="@+id/name_edit"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.014" />
 
     <EditText
         android:id="@+id/name_edit"
@@ -35,25 +37,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
     <!--    phone number-->
+
     <TextView
         android:id="@+id/phone"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:gravity="center_vertical"
-        android:text="@string/phone"
+        android:text="@string/password"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintEnd_toStartOf="@+id/phone_edit"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.098" />
 
     <EditText
         android:id="@+id/phone_edit"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:ems="10"
-        android:hint="@string/enter_phone_number"
+        android:hint="@string/enter_password"
         android:importantForAutofill="no"
         android:inputType="phone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,6 +66,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1" />
     <!--    gender-->
+
     <TextView
         android:id="@+id/gender"
         android:layout_width="100dp"
@@ -70,11 +74,11 @@
         android:gravity="center_vertical"
         android:text="@string/gender"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintEnd_toStartOf="@+id/radioGrp"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.196" />
 
     <RadioGroup
         android:id="@+id/radioGrp"
@@ -110,6 +114,7 @@
             android:textSize="14sp" />
     </RadioGroup>
     <!--    age-->
+
     <TextView
         android:id="@+id/age"
         android:layout_width="100dp"
@@ -117,11 +122,11 @@
         android:gravity="center_vertical"
         android:text="@string/age"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintEnd_toStartOf="@+id/age_edit"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.296" />
 
     <EditText
         android:id="@+id/age_edit"
@@ -138,6 +143,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
     <!--    weight-->
+
     <TextView
         android:id="@+id/weight"
         android:layout_width="100dp"
@@ -145,11 +151,11 @@
         android:gravity="center_vertical"
         android:text="@string/weight"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintEnd_toStartOf="@+id/spinner_weight"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.395" />
 
     <Spinner
         android:id="@+id/spinner_weight"
@@ -162,6 +168,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4" />
     <!--    blood type-->
+
     <TextView
         android:id="@+id/blood_group"
         android:layout_width="100dp"
@@ -169,11 +176,11 @@
         android:gravity="center_vertical"
         android:text="@string/blood_group"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintEnd_toStartOf="@+id/blood_group_spinner"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <Spinner
         android:id="@+id/blood_group_spinner"
@@ -186,6 +193,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
     <!--    city-->
+
     <TextView
         android:id="@+id/city"
         android:layout_width="100dp"
@@ -193,11 +201,11 @@
         android:gravity="center_vertical"
         android:text="@string/city"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintEnd_toStartOf="@+id/city_edit"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.592" />
 
     <EditText
         android:id="@+id/city_edit"
@@ -223,9 +231,9 @@
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintTop_toBottomOf="@+id/city_edit"
+        app:layout_constraintVertical_bias="0.372" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

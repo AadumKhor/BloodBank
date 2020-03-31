@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".donor_ui.DonorHomeScreen"
     android:id="@+id/d_container"
+    android:layoutDirection="ltr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">

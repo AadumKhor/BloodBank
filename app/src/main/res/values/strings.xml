@@ -80,4 +80,6 @@
     <string name="confirm_appointment">Confirm Appointment</string>
     <string name="delete">Delete</string>
     <string name="select_date">Select Date</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter Password</string>
 </resources>
