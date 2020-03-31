@@ -49,8 +49,6 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         db = new DatabaseHelper_Hospitals(getContext());
         mAdapter = new NhRvAdapter(db.viewData());
 
-        search = root.findViewById(R.id.editText);
-//        mAdapter.swapCursor(db.viewData());
         // create the dropdown
         createDropDownList(root);
         buildRecyclerView(root, mAdapter);
