@@ -12,7 +12,7 @@
     <TextView
         android:id="@+id/name"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
         android:text="@string/name"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,7 +20,7 @@
         app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.014" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/name_edit"
@@ -38,20 +38,20 @@
         app:layout_constraintVertical_bias="0.0" />
     <!--    phone number-->
 
+    <!--    gender-->
+
     <TextView
         android:id="@+id/phone"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
         android:text="@string/password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/phone_edit"
         app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.098" />
-
-    <!--    gender-->
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintVertical_bias="0.03" />
 
     <EditText
         android:id="@+id/phone_edit"
@@ -68,20 +68,20 @@
         app:layout_constraintTop_toBottomOf="@+id/name_edit"
         app:layout_constraintVertical_bias="0.03" />
 
+    <!--    age-->
+
     <TextView
         android:id="@+id/gender"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
         android:text="@string/gender"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/radioGrp"
         app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.196" />
-
-    <!--    age-->
+        app:layout_constraintTop_toBottomOf="@+id/phone"
+        app:layout_constraintVertical_bias="0.032" />
 
     <RadioGroup
         android:id="@+id/radioGrp"
@@ -117,20 +117,20 @@
             android:textSize="14sp" />
     </RadioGroup>
 
+    <!--    weight-->
+
     <TextView
         android:id="@+id/age"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
         android:text="@string/age"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/age_edit"
         app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.296" />
-
-    <!--    weight-->
+        app:layout_constraintTop_toBottomOf="@+id/gender"
+        app:layout_constraintVertical_bias="0.042" />
 
     <EditText
         android:id="@+id/age_edit"
@@ -147,20 +147,20 @@
         app:layout_constraintTop_toBottomOf="@+id/radioGrp"
         app:layout_constraintVertical_bias="0.042" />
 
+    <!--    blood type-->
+
     <TextView
         android:id="@+id/weight"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
         android:text="@string/weight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/spinner_weight"
         app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.395" />
-
-    <!--    blood type-->
+        app:layout_constraintTop_toBottomOf="@+id/age"
+        app:layout_constraintVertical_bias="0.044" />
 
     <Spinner
         android:id="@+id/spinner_weight"
@@ -173,20 +173,20 @@
         app:layout_constraintTop_toBottomOf="@+id/age_edit"
         app:layout_constraintVertical_bias="0.044" />
 
+    <!--    city-->
+
     <TextView
         android:id="@+id/blood_group"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
         android:text="@string/blood_group"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/blood_group_spinner"
         app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
-
-    <!--    city-->
+        app:layout_constraintTop_toBottomOf="@+id/weight"
+        app:layout_constraintVertical_bias="0.064" />
 
     <Spinner
         android:id="@+id/blood_group_spinner"
@@ -199,20 +199,20 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner_weight"
         app:layout_constraintVertical_bias="0.064" />
 
+    <!--confirm-->
+
     <TextView
         android:id="@+id/city"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
         android:text="@string/city"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/city_edit"
         app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.592" />
-
-    <!--confirm-->
+        app:layout_constraintTop_toBottomOf="@+id/blood_group"
+        app:layout_constraintVertical_bias="0.056" />
 
     <EditText
         android:id="@+id/city_edit"

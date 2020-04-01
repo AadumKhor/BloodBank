@@ -41,45 +41,37 @@ public class AddHospitalFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sId = random();
-                String sHospitalName = hospitalName.getText().toString();
-                String sCity = city.getText().toString();
-                String[] sWorkingDays = workingDays.getText().toString().split("-");
-                String[] sWorkingTime = workingHours.getText().toString().split("-");
-                String gmaps = gMapsUrl.getText().toString();
+                if (workingDays.getText().toString().contains("-") && workingHours.getText().toString().contains("-")) {
+                    String sId = java.util.UUID.randomUUID().toString().replace("-", "");
+                    String sHospitalName = hospitalName.getText().toString();
+                    String sCity = city.getText().toString();
+                    String[] sWorkingDays = workingDays.getText().toString().split("-");
+                    String[] sWorkingTime = workingHours.getText().toString().split("-");
+                    String gmaps = gMapsUrl.getText().toString();
 
-                boolean isDataFilled = !sId.equals("") && !sHospitalName.equals("") && !sCity.equals("") && sWorkingDays.length != 0 &&
-                        sWorkingTime.length != 0
-                        && !gmaps.equals("");
+                    boolean isDataFilled = !sId.equals("") && !sHospitalName.equals("") && !sCity.equals("") && sWorkingDays.length != 0 &&
+                            sWorkingTime.length != 0
+                            && !gmaps.equals("");
 
-                if (isDataFilled && db.insertData(sId, sHospitalName, sCity, sWorkingDays[0], sWorkingDays[1],
-                        sWorkingTime[0], sWorkingTime[1], gmaps)) {
-                    Toast.makeText(getContext(), "Data added.", Toast.LENGTH_SHORT).show();
+                    if (isDataFilled && db.insertData(sId, sHospitalName, sCity, sWorkingDays[0], sWorkingDays[1],
+                            sWorkingTime[0], sWorkingTime[1], gmaps)) {
+                        Toast.makeText(getContext(), "Data added.", Toast.LENGTH_SHORT).show();
 
-                    // clear data after showing toast
-                    hospitalName.getText().clear();
-                    city.getText().clear();
-                    workingDays.getText().clear();
-                    workingHours.getText().clear();
-                    gMapsUrl.getText().clear();
+                        // clear data after showing toast
+                        hospitalName.getText().clear();
+                        city.getText().clear();
+                        workingDays.getText().clear();
+                        workingHours.getText().clear();
+                        gMapsUrl.getText().clear();
+                    } else {
+                        Toast.makeText(getContext(), "Data not added.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getContext(), "Data not added.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please add data in given format", Toast.LENGTH_LONG).show();
                 }
             }
         });
         return root;
-    }
-
-    private static String random() {
-        Random generator = new Random();
-        StringBuilder randomStringBuilder = new StringBuilder();
-        int randomLength = 8;
-        char tempChar;
-        for (int i = 0; i < randomLength; i++) {
-            tempChar = (char) (generator.nextInt(57) + 65);
-            randomStringBuilder.append(tempChar);
-        }
-        return randomStringBuilder.toString();
     }
 
     private void initView(View root) {
