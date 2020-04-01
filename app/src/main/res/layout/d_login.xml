@@ -10,7 +10,7 @@
     <EditText
         android:id="@+id/phone_edit"
         android:layout_width="350dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="@string/enter_name"
         android:importantForAutofill="no"
@@ -26,7 +26,7 @@
     <EditText
         android:id="@+id/password_edit"
         android:layout_width="350dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="@string/enter_password"
         android:importantForAutofill="no"
