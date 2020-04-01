@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
     private DatabaseHelper_Hospitals db;
     private NhRvAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private EditText search;
 
     //    private ArrayList<HospitalCard> hospitalList = new ArrayList<>();
     private LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -52,21 +51,6 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         // create the dropdown
         createDropDownList(root);
         buildRecyclerView(root, mAdapter);
-//        viewData();
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO: Add search thing
-            }
-        });
         return root;
     }
 
