@@ -24,7 +24,7 @@
     <string name="city">City</string>
     <string name="working_days">Working Days</string>
     <string name="working_hours">Working Hours</string>
-    <string name="working_hours_example">eg 8AM - 10PM</string>
+    <string name="working_hours_example">eg 10-23 in 24h format</string>
     <string name="working_days_example">eg Tuesday - Sunday</string>
     <string name="google_maps_url">Google Maps URL</string>
     <string name="url">URL</string>
@@ -81,4 +81,5 @@
     <string name="delete">Delete</string>
     <string name="select_date">Select Date</string>
     <string name="password">Password</string>
+    <string name="d_o_b">D.O.B</string>
 </resources>

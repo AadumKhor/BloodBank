@@ -36,6 +36,7 @@ public class AppointmentsFragment extends Fragment {
     // helper class db
     private DatabaseHelper_Appointments db_app;
     private DatabaseHelper_Hospitals db_hos;
+    private RVAdapter mAdapter;
 
     private String userId;
 
@@ -51,7 +52,8 @@ public class AppointmentsFragment extends Fragment {
         db_app = new DatabaseHelper_Appointments(getContext());
         db_hos = new DatabaseHelper_Hospitals(getContext());
 
-        RVAdapter mAdapter = new RVAdapter(db_app.getData(userId), db_hos, db_app);
+
+        mAdapter = new RVAdapter(appointmentList, db_app);
 
         buildRecyclerView(root, mAdapter);
         createList();
@@ -70,7 +72,7 @@ public class AppointmentsFragment extends Fragment {
         return root;
     }
 
-    private void buildRecyclerView(View root, RVAdapter mAdapter) {
+    private void buildRecyclerView(View root, final RVAdapter mAdapter) {
         mRecyclerView = root.findViewById(R.id.appointments_list);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -84,6 +86,7 @@ public class AppointmentsFragment extends Fragment {
                 String id = (String) Objects.requireNonNull(mRecyclerView.
                         findViewHolderForAdapterPosition(position)).itemView.getTag();
                 AppointmentCard currentCard = appointmentList.get(position);
+
                 Intent intent = new Intent(getContext(), ChangeAppointmentDetails.class);
                 Result result = db_hos.getHospitalDetailsAppointments(currentCard.getmHospitalId());
                 if (result instanceof Result.Success) {
@@ -92,8 +95,10 @@ public class AppointmentsFragment extends Fragment {
                     intent.putExtra("name", details[0]);
                     intent.putExtra("city", details[1]);
                     intent.putExtra("gmap", details[2]);
+                    intent.putExtra("startTime", details[3]);
+                    intent.putExtra("endTime", details[4]);
                     intent.putExtra("date", currentCard.getmDate());
-                    intent.putExtra("time", currentCard.getmStartingTime());
+                    intent.putExtra("setTime", currentCard.getmStartingTime());
                     intent.putExtra("image", R.drawable.ic_local_hospital_black_24dp);
                     startActivity(intent);
                 }
@@ -102,23 +107,45 @@ public class AppointmentsFragment extends Fragment {
     }
 
     private void createList() {
-        Cursor cursor = db_app.getData(userId);
+        Cursor cursor_app = db_app.getData(userId);
+        String appId = "", hosId = "", time = "", date = "";
 
-        if (cursor.getCount() == 0) {
-            Toast.makeText(getContext(), "No appointments", Toast.LENGTH_SHORT).show();
-        } else {
-            while (cursor.moveToNext()) {
-                if (cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_USER_ID)).equals(userId)) {
-                    appointmentList.add(new AppointmentCard(
-                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID)),
-                            R.drawable.ic_dashboard_black_24dp,
-                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID)),
-                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME)),
-                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE))
-
-                    ));
-                }
+        if (cursor_app.getCount() != 0) {
+            while (cursor_app.moveToNext()) {
+                appId = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID));
+                hosId = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID));
+                time = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME));
+                date = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE));
             }
         }
+        Result result = db_hos.getHospitalDetailsAppointments(hosId);
+
+        if(result instanceof  Result.Success){
+            String[] details = (String[]) ((Result.Success) result).getData();
+
+            appointmentList.add(new AppointmentCard(appId, R.drawable.ic_local_hospital_black_24dp,
+                    hosId ,details[0], details[1], time, date));
+            mAdapter.notifyDataSetChanged();
+            if(details[0].equals("")|| details[1].equals("")){
+                db_app.removeItem(appId);
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+//        if (cursor.getCount() == 0) {
+//            Toast.makeText(getContext(), "No appointments", Toast.LENGTH_SHORT).show();
+//        } else {
+//            while (cursor.moveToNext()) {
+//                if (cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_USER_ID)).equals(userId)) {
+//                    appointmentList.add(new AppointmentCard(
+//                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID)),
+//                            R.drawable.ic_dashboard_black_24dp,
+//                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID)),
+//                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME)),
+//                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE))
+//                    ));
+//                    mAdapter.notifyDataSetChanged();
+//                }
+//            }
+//        }
     }
 }

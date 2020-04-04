@@ -3,12 +3,14 @@ package com.silentlad.bloodbank.donor_ui.appointments;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,9 +25,15 @@ import com.silentlad.bloodbank.data.Result;
 import com.silentlad.bloodbank.data.databasehelper.DatabaseHelper_Appointments;
 import com.silentlad.bloodbank.donor_ui.FixAppointment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class ChangeAppointmentDetails extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private TextView datePickText;
+    private Spinner tStartTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +44,7 @@ public class ChangeAppointmentDetails extends AppCompatActivity {
         final String hospitalName = getIntent().getStringExtra("name");
         String city = getIntent().getStringExtra("city");
         String date = getIntent().getStringExtra("date");
-        String startTime = getIntent().getStringExtra("time");
+        String setTime = getIntent().getStringExtra("setTime");
         int imageR = getIntent().getIntExtra("image", 0);
 
         TextView tHospitalName = findViewById(R.id.change_app_hospital_name);
@@ -72,8 +80,12 @@ public class ChangeAppointmentDetails extends AppCompatActivity {
             }
         };
 
-        final Spinner tStartTime = findViewById(R.id.change_app_s2);
-        createDropDownList2(tStartTime);
+        tStartTime = findViewById(R.id.change_app_s2);
+        try {
+            createDropDownList2();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         ImageView tImageR = findViewById(R.id.change_app_imageView);
 
         Button confirmButton = findViewById(R.id.change_app_button);
@@ -102,12 +114,39 @@ public class ChangeAppointmentDetails extends AppCompatActivity {
     }
 
 
-    private void createDropDownList2(Spinner dropDown_time) {
-        // add a list of items to it for mock
-        String[] mock_items = new String[]{"11:00", "12:00", "13:00", "14:00", "15:00"};
-        // basic adapter to display items
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, mock_items);
+    private void createDropDownList2() throws ParseException {
+        String startTime = getIntent().getStringExtra("startTime");
+        String endTime = getIntent().getStringExtra("endTime");
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        assert startTime != null;
+        assert endTime != null;
+        int difference = Integer.parseInt(endTime) - Integer.parseInt(startTime);
+        if(!startTime.contains(":00:00")) {
+            startTime = startTime.concat(":00:00");
+        }
+
+        if(!endTime.contains(":00:00")) {
+            endTime = endTime.concat(":00:00");
+        }
+        Log.println(Log.DEBUG, "time", "new "+startTime);
+        String sTime = Objects.requireNonNull(format.parse(startTime)).toString();
+        String eTime = Objects.requireNonNull(format.parse(endTime)).toString();
+
+        ArrayList<String> timeList = new ArrayList<>();
+        timeList.add(0, sTime.split(" ")[3]);
+//        timeList.add(difference-1, endTime);
+        for(int i = 1; i <= difference-2; i++){
+            startTime = startTime.replace(":00:00", "");
+            int tempTime = Integer.parseInt(startTime) + i;
+
+            timeList.add(String.valueOf(tempTime).concat(":00:00"));
+        }
+        timeList.add(difference-1, eTime.split(" ")[3]);
+//        Log.println(Log.DEBUG, "time", String.valueOf(timeList.size()));
+//        // basic adapter to display items
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timeList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dropDown_time.setAdapter(adapter);
+        tStartTime.setAdapter(adapter);
     }
 }

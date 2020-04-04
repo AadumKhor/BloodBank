@@ -1,30 +1,42 @@
 package com.silentlad.bloodbank.donor_ui.donorLogin;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silentlad.bloodbank.R;
 import com.silentlad.bloodbank.data.Result;
 import com.silentlad.bloodbank.data.databasehelper.DatabaseHelper_Users;
+import com.silentlad.bloodbank.donor_ui.FixAppointment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 import java.util.Random;
-import java.util.UUID;
 
 public class SignUpActivity extends AppCompatActivity {
     private RadioGroup radio_group;
 //    private RadioButton radio_sex_button;
+    private EditText pwd_edit;
+    private TextView age_edit;
     private EditText phone_edit;
-    private EditText age_edit;
-    private EditText name_edit;
     private EditText city_edit;
     private Spinner weight_dropdown;
     private Spinner bloodGroup_dropdown;
@@ -34,12 +46,53 @@ public class SignUpActivity extends AppCompatActivity {
     private String[] weight_options = new String[]{"Below 50kg", "Above 50kg"};
     private String[] blood_groups = new String[]{"AB+", "AB-", "A+", "A-", "B+", "B-", "O+", "0-", "Other"};
 
+    private DatePickerDialog.OnDateSetListener onDateSetListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         db = new DatabaseHelper_Users(this);
+        age_edit = findViewById(R.id.age_edit);
+        age_edit.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                Calendar calender = Calendar.getInstance();
+                int year = calender.get(Calendar.YEAR);
+                int month = calender.get(Calendar.MONTH);
+                int day = calender.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(SignUpActivity.this,
+                        android.R.style.Theme_Material_Dialog_MinWidth,
+                        onDateSetListener, year, month, day
+                );
+
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                Calendar dob = Calendar.getInstance();
+                Calendar now = Calendar.getInstance();
+
+                dob.set(year, month, dayOfMonth);
+
+                int age = now.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+                if (now.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+                    age--;
+                }
+                age_edit.setText(String.valueOf(age));
+            }
+        };
+
 
         // BUTTONS
         Button sign_up_button = findViewById(R.id.sign_up_button);
@@ -47,10 +100,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         // EDIT FIELDS
 
-        name_edit = findViewById(R.id.name_edit);
-        age_edit = findViewById(R.id.age_edit);
-        city_edit = findViewById(R.id.city_edit);
         phone_edit = findViewById(R.id.phone_edit);
+        city_edit = findViewById(R.id.city_edit);
+        pwd_edit = findViewById(R.id.password_edit);
 
         // RADIO BUTTON GROUP
         radio_group = findViewById(R.id.radioGrp);
@@ -111,9 +163,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     private boolean signUp() {
         String id = java.util.UUID.randomUUID().toString().replace("-", "");
-        String name = name_edit.getText().toString().trim();
+        String name = phone_edit.getText().toString().trim();
         String city = city_edit.getText().toString().trim();
-        String phone = phone_edit.getText().toString().trim();
+        String phone = pwd_edit.getText().toString().trim();
         String age = age_edit.getText().toString().trim();
         String weight = weight_dropdown.getSelectedItem().toString().trim();
         String bloodGroup = bloodGroup_dropdown.getSelectedItem().toString().trim();

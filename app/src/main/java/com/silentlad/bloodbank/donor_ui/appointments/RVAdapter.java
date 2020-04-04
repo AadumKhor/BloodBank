@@ -11,24 +11,33 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.silentlad.bloodbank.AppointmentCard;
 import com.silentlad.bloodbank.R;
 import com.silentlad.bloodbank.data.AppointmentContract;
 import com.silentlad.bloodbank.data.Result;
 import com.silentlad.bloodbank.data.databasehelper.DatabaseHelper_Appointments;
 import com.silentlad.bloodbank.data.databasehelper.DatabaseHelper_Hospitals;
 
+import java.util.ArrayList;
+
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewholder> {
     private OnItemClickListener mListener;
+    private ArrayList<AppointmentCard> mArrayList;
     private Cursor mCursorApp;
     private DatabaseHelper_Hospitals mDb_hos;
     private DatabaseHelper_Appointments mDb_app;
 
     // transfer all data from external list to our list
-    public RVAdapter(Cursor cursor, DatabaseHelper_Hospitals db_hos, DatabaseHelper_Appointments db_app) {
-        mCursorApp = cursor;
-        mDb_hos = db_hos;
-        mDb_app = db_app;
+//    public RVAdapter(Cursor cursor, DatabaseHelper_Hospitals db_hos, DatabaseHelper_Appointments db_app) {
+//        mCursorApp = cursor;
+//        mDb_hos = db_hos;
+//        mDb_app = db_app;
+//    }
+
+    public RVAdapter(ArrayList<AppointmentCard> list, DatabaseHelper_Appointments mDb_app){
+        this.mArrayList = list;
+        this.mDb_app = mDb_app;
     }
 
     public interface OnItemClickListener {
@@ -79,41 +88,60 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewholder> {
         return new RVViewholder(v, mListener);
     }
 
+//    @Override
+//    public void onBindViewHolder(@NonNull RVViewholder holder, final int position) {
+//        if (!mCursorApp.moveToPosition(position)) {
+//            return;
+//        }
+//        final String id = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID));
+//        final String hospitalId = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID));
+//        final Result result = mDb_hos.getHospitalDetailsAppointments(hospitalId);
+//
+//        if (result instanceof Result.Success) {
+//            String[] details = (String[]) ((Result.Success) result).getData();
+//            final String time = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME));
+//            final String date = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE));
+//
+//            holder.mHospitalName.setText(details[0]);
+//            holder.mCity.setText(details[1]);
+//            holder.mDate.setText(date);
+//            holder.mStartingTime.setText(time);
+//            holder.mImageView.setImageResource(R.drawable.ic_local_hospital_black_24dp);
+//            holder.mButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mDb_app.removeItem(id);
+//                }
+//            });
+//            // set id as tag for the whole view
+//            holder.itemView.setTag(id);
+//        } else {
+//            mDb_app.removeItem(id);
+//        }
+//
+//    }
+
     @Override
-    public void onBindViewHolder(@NonNull RVViewholder holder, final int position) {
-        if (!mCursorApp.moveToPosition(position)) {
-            return;
-        }
-        final String id = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID));
-        final String hospitalId = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID));
-        final Result result = mDb_hos.getHospitalDetailsAppointments(hospitalId);
+    public void onBindViewHolder(@NonNull RVViewholder holder, final int position){
+        final AppointmentCard currentCard = mArrayList.get(position);
 
-        if (result instanceof Result.Success) {
-            String[] details = (String[]) ((Result.Success) result).getData();
-            final String time = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME));
-            final String date = mCursorApp.getString(mCursorApp.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE));
-
-            holder.mHospitalName.setText(details[0]);
-            holder.mCity.setText(details[1]);
-            holder.mDate.setText(date);
-            holder.mStartingTime.setText(time);
-            holder.mImageView.setImageResource(R.drawable.ic_local_hospital_black_24dp);
-            holder.mButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDb_app.removeItem(id);
-                }
-            });
-            // set id as tag for the whole view
-            holder.itemView.setTag(id);
-        } else {
-            mDb_app.removeItem(id);
-        }
+        holder.mHospitalName.setText(currentCard.getHosName());
+        holder.mCity.setText(currentCard.getCityName());
+        holder.mStartingTime.setText(currentCard.getHosName());
+        holder.mDate.setText(currentCard.getHosName());
+        holder.mImageView.setImageResource(R.drawable.ic_local_hospital_black_24dp);
+        holder.mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDb_app.removeItem(currentCard.getmAppointmentId());
+            }
+        });
+        holder.itemView.setTag(currentCard.getmAppointmentId());
 
     }
 
     @Override
     public int getItemCount() {
-        return mCursorApp.getCount();
+        return mArrayList.size();
     }
 }

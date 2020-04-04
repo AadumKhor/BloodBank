@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,6 +30,9 @@ import com.silentlad.bloodbank.data.model.DonorLoggedInUser;
 import com.silentlad.bloodbank.donor_ui.donorLogin.DonorLoginViewModel;
 import com.silentlad.bloodbank.donor_ui.donorLogin.DonorLoginViewModelFactory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
@@ -73,7 +77,11 @@ public class FixAppointment extends AppCompatActivity {
                 datePickText.setText(date);
             }
         };
-        createDropDownList2();
+        try {
+            createDropDownList2();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         name_textView.setText(hospitalName);
         city_textView.setText(city);
         hospital_image.setImageResource(image);
@@ -130,9 +138,14 @@ public class FixAppointment extends AppCompatActivity {
                 assert hosId != null;
                 boolean isDataFilled = !id.equals("") && !hosId.equals("") &&
                         !date.equals("") && !time.equals("");
-                boolean insertData = db_app.insert(id, hosId, userId, time, date) instanceof Result.Success;
-                if (isDataFilled && insertData) {
-                    Toast.makeText(getApplicationContext(), "Appointment Made.", Toast.LENGTH_SHORT).show();
+
+                boolean doesNotExist = !db_app.checkIfExists(hosId, userId, time, date);
+                if (isDataFilled && doesNotExist) {
+                    boolean insertData = db_app.insert(id, hosId, userId, time, date) instanceof Result.Success;
+
+                    if (insertData) {
+                        Toast.makeText(getApplicationContext(), "Appointment Made.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Appointment cannot be Made.", Toast.LENGTH_SHORT).show();
                 }
@@ -153,22 +166,41 @@ public class FixAppointment extends AppCompatActivity {
         return randomStringBuilder.toString();
     }
 
-//    private void createDropDownList1() {
-//        dropDown = findViewById(R.id.fix_app_s1);
-//        // add a list of items to it for mock
-//        String[] mock_items = new String[]{"Thursday", "Friday", "Saturday", "Sunday", "Monday"};
-//        // basic adapter to display items
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, mock_items);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        dropDown.setAdapter(adapter);
-//    }
+    private void createDropDownList2() throws ParseException {
+        String id = getIntent().getStringExtra("hosId");
+        String startTime = getIntent().getStringExtra("startTime");
+        String endTime = getIntent().getStringExtra("endTime");
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        assert startTime != null;
+        assert endTime != null;
+        int difference = Integer.parseInt(endTime) - Integer.parseInt(startTime);
+        if (!startTime.contains(":00:00")) {
+            startTime = startTime.concat(":00:00");
+        }
 
-    private void createDropDownList2() {
+        if (!endTime.contains(":00:00")) {
+            endTime = endTime.concat(":00:00");
+        }
+        Log.println(Log.DEBUG, "time", "new " + startTime);
+        String sTime = Objects.requireNonNull(format.parse(startTime)).toString();
+        String eTime = Objects.requireNonNull(format.parse(endTime)).toString();
+
+        ArrayList<String> timeList = new ArrayList<>();
+        timeList.add(0, sTime.split(" ")[3]);
+//        timeList.add(difference-1, endTime);
+        for (int i = 1; i <= difference - 2; i++) {
+            startTime = startTime.replace(":00:00", "");
+            int tempTime = Integer.parseInt(startTime) + i;
+
+            timeList.add(String.valueOf(tempTime).concat(":00:00"));
+        }
+        timeList.add(difference - 1, eTime.split(" ")[3]);
+//        Log.println(Log.DEBUG, "time", String.valueOf(timeList.size()));
+
         dropDown_time = findViewById(R.id.fix_app_s1);
-        // add a list of items to it for mock
-        String[] mock_items = new String[]{"11:00", "12:00", "13:00", "14:00", "15:00"};
-        // basic adapter to display items
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, mock_items);
+//        // basic adapter to display items
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timeList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropDown_time.setAdapter(adapter);
     }

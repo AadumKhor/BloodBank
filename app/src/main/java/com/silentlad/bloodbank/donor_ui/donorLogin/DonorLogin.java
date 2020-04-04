@@ -26,7 +26,7 @@ public class DonorLogin extends AppCompatActivity {
         setContentView(R.layout.d_login);
         donorLoginViewModel = ViewModelProviders.of(this, new DonorLoginViewModelFactory()).get(DonorLoginViewModel.class);
 
-        final EditText name_edit = findViewById(R.id.phone_edit);
+        final EditText phone_edit = findViewById(R.id.phone_edit);
         final EditText password_edit = findViewById(R.id.password_edit);
         final Button login_button = findViewById(R.id.login);
         final Button sign_up_button = findViewById(R.id.sign_up_button);
@@ -45,7 +45,7 @@ public class DonorLogin extends AppCompatActivity {
             public void onClick(View v) {
                 // navigate to donor screen
                 DonorLoginRepository repo = new DonorLoginRepository(new DonorLoginDataSource());
-                String name = name_edit.getText().toString().trim();
+                String name = phone_edit.getText().toString().trim();
                 String phone = password_edit.getText().toString().trim();
 
                 if (!name.equals("") && !phone.equals("")) {

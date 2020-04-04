@@ -53,6 +53,8 @@ public class NearbyHospitalFragment extends Fragment {
                 intent.putExtra("id", currentItem[0]);
                 intent.putExtra("name", currentItem[1]);
                 intent.putExtra("city", currentItem[2]);
+                intent.putExtra("startTime", currentItem[5]);
+                intent.putExtra("endTime", currentItem[6]);
                 intent.putExtra("gmap", currentItem[7]);
                 startActivity(intent);
             }
