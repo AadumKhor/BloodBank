@@ -120,32 +120,20 @@ public class AppointmentsFragment extends Fragment {
         }
         Result result = db_hos.getHospitalDetailsAppointments(hosId);
 
-        if(result instanceof  Result.Success){
+        if (result instanceof Result.Success) {
             String[] details = (String[]) ((Result.Success) result).getData();
 
             appointmentList.add(new AppointmentCard(appId, R.drawable.ic_local_hospital_black_24dp,
-                    hosId ,details[0], details[1], time, date));
+                    hosId, details[0], details[1], time, date));
             mAdapter.notifyDataSetChanged();
-            if(details[0].equals("")|| details[1].equals("")){
+            if (details[0].equals("") || details[1].equals("")) {
                 db_app.removeItem(appId);
                 mAdapter.notifyDataSetChanged();
             }
         }
-//        if (cursor.getCount() == 0) {
-//            Toast.makeText(getContext(), "No appointments", Toast.LENGTH_SHORT).show();
-//        } else {
-//            while (cursor.moveToNext()) {
-//                if (cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_USER_ID)).equals(userId)) {
-//                    appointmentList.add(new AppointmentCard(
-//                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID)),
-//                            R.drawable.ic_dashboard_black_24dp,
-//                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID)),
-//                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME)),
-//                            cursor.getString(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE))
-//                    ));
-//                    mAdapter.notifyDataSetChanged();
-//                }
-//            }
-//        }
+
+        if (appointmentList.size() == 0) {
+            Toast.makeText(getContext(), "No appointments.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

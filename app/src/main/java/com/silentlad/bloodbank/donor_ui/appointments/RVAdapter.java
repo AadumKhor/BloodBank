@@ -127,8 +127,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewholder> {
 
         holder.mHospitalName.setText(currentCard.getHosName());
         holder.mCity.setText(currentCard.getCityName());
-        holder.mStartingTime.setText(currentCard.getHosName());
-        holder.mDate.setText(currentCard.getHosName());
+        holder.mStartingTime.setText(currentCard.getmStartingTime());
+        holder.mDate.setText(currentCard.getmDate());
         holder.mImageView.setImageResource(R.drawable.ic_local_hospital_black_24dp);
         holder.mButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -32,6 +33,8 @@ public class ProfileFragment extends Fragment {
     private DatabaseHelper_Users db;
 
     private RadioGroup radio_group;
+    private RadioButton mRadio;
+    private RadioButton fRadio;
     private EditText phone_edit;
     private EditText age_edit;
     private EditText name_edit;
@@ -63,6 +66,8 @@ public class ProfileFragment extends Fragment {
 
         // RADIO BUTTON GROUP
         radio_group = root.findViewById(R.id.radioGrp);
+        mRadio = root.findViewById(R.id.radioM);
+        fRadio = root.findViewById(R.id.radioF);
 
         // SPINNERS
         weight_dropdown = root.findViewById(R.id.spinner_weight);
@@ -119,6 +124,12 @@ public class ProfileFragment extends Fragment {
 
             bloodGroup_dropdown.setSelection(bgPos);
             weight_dropdown.setSelection(weightPos);
+
+            if (array[2].equals("Male")) {
+                mRadio.setEnabled(true);
+            } else {
+                fRadio.setEnabled(true);
+            }
 
         }
     }
