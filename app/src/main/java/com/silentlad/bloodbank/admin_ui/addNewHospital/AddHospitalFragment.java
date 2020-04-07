@@ -53,8 +53,9 @@ public class AddHospitalFragment extends Fragment {
                             sWorkingTime.length != 0
                             && !gmaps.equals("");
 
-                    if (isDataFilled && db.insertData(sId, sHospitalName, sCity, sWorkingDays[0], sWorkingDays[1],
-                            sWorkingTime[0], sWorkingTime[1], gmaps)) {
+                    if (isDataFilled && db.insertData(sId.trim(), sHospitalName.trim(), sCity.trim(), sWorkingDays[0].trim(),
+                            sWorkingDays[1].trim(),
+                            sWorkingTime[0].trim(), sWorkingTime[1].trim(), gmaps.trim())) {
                         Toast.makeText(getContext(), "Data added.", Toast.LENGTH_SHORT).show();
 
                         // clear data after showing toast

@@ -192,8 +192,14 @@ public class FixAppointment extends AppCompatActivity {
         for (int i = 1; i <= difference - 2; i++) {
             startTime = startTime.replace(":00:00", "");
             int tempTime = Integer.parseInt(startTime) + i;
-
+            int tempTimeHalf = Integer.parseInt(startTime) + (i-1);
+            if(tempTimeHalf == 0) {
+                timeList.add(String.valueOf(tempTimeHalf).concat("0:30:00"));
+            }else{
+                timeList.add(String.valueOf(tempTimeHalf).concat(":30:00"));
+            }
             timeList.add(String.valueOf(tempTime).concat(":00:00"));
+
         }
         timeList.add(difference - 1, eTime.split(" ")[3]);
 //        Log.println(Log.DEBUG, "time", String.valueOf(timeList.size()));

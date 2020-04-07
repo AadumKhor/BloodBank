@@ -33,7 +33,7 @@ import java.util.Random;
 
 public class SignUpActivity extends AppCompatActivity {
     private RadioGroup radio_group;
-//    private RadioButton radio_sex_button;
+    //    private RadioButton radio_sex_button;
     private EditText pwd_edit;
     private TextView age_edit;
     private EditText phone_edit;
@@ -86,7 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 int age = now.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
 
-                if (now.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+                if (now.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
                     age--;
                 }
                 age_edit.setText(String.valueOf(age));
@@ -170,9 +170,15 @@ public class SignUpActivity extends AppCompatActivity {
         String weight = weight_dropdown.getSelectedItem().toString().trim();
         String bloodGroup = bloodGroup_dropdown.getSelectedItem().toString().trim();
         String gender = addListenerOnButton();
-        Result result = db.insertData(id, name, phone, gender, age, weight, bloodGroup, city);
 
-        return result instanceof Result.Success;
+        if (weight.equals("Below 50kg")) {
+            Toast.makeText(getApplicationContext(), "Sorry we cannot sign you up!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            Result result = db.insertData(id, name, phone, gender, age, weight, bloodGroup, city);
+
+            return result instanceof Result.Success;
+        }
     }
 
     public String addListenerOnButton() {
