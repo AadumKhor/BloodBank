@@ -108,27 +108,27 @@ public class AppointmentsFragment extends Fragment {
 
     private void createList() {
         Cursor cursor_app = db_app.getData(userId);
-        String appId = "", hosId = "", time = "", date = "";
+//        String appId , hosId , time , date ;
 
         if (cursor_app.getCount() != 0) {
             while (cursor_app.moveToNext()) {
-                appId = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID));
-                hosId = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID));
-                time = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME));
-                date = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE));
-            }
-        }
-        Result result = db_hos.getHospitalDetailsAppointments(hosId);
+                String appId = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_ID));
+                String hosId = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_HOSPITAL_ID));
+                String time = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_TIME));
+                String date = cursor_app.getString(cursor_app.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_DATE));
+                Result result = db_hos.getHospitalDetailsAppointments(hosId);
 
-        if (result instanceof Result.Success) {
-            String[] details = (String[]) ((Result.Success) result).getData();
+                if (result instanceof Result.Success) {
+                    String[] details = (String[]) ((Result.Success) result).getData();
 
-            appointmentList.add(new AppointmentCard(appId, R.drawable.ic_local_hospital_black_24dp,
-                    hosId, details[0], details[1], time, date));
-            mAdapter.notifyDataSetChanged();
-            if (details[0].equals("") || details[1].equals("")) {
-                db_app.removeItem(appId);
-                mAdapter.notifyDataSetChanged();
+                    appointmentList.add(new AppointmentCard(appId, R.drawable.ic_local_hospital_black_24dp,
+                            hosId, details[0], details[1], time, date));
+                    mAdapter.notifyDataSetChanged();
+                    if (details[0].equals("") || details[1].equals("")) {
+                        db_app.removeItem(appId);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
             }
         }
 

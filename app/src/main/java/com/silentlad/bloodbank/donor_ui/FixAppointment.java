@@ -137,7 +137,7 @@ public class FixAppointment extends AppCompatActivity {
 
                 assert hosId != null;
                 boolean isDataFilled = !id.equals("") && !hosId.equals("") &&
-                        !date.equals("") && !time.equals("");
+                        !date.equals("") && !date.equals("Select Date") && !time.equals("");
 
                 boolean doesNotExist = !db_app.checkIfExists(hosId, userId, time, date);
                 if (isDataFilled && doesNotExist) {

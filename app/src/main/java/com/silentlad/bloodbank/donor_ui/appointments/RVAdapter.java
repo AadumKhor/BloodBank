@@ -24,18 +24,9 @@ import java.util.ArrayList;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewholder> {
     private OnItemClickListener mListener;
     private ArrayList<AppointmentCard> mArrayList;
-    private Cursor mCursorApp;
-    private DatabaseHelper_Hospitals mDb_hos;
     private DatabaseHelper_Appointments mDb_app;
 
-    // transfer all data from external list to our list
-//    public RVAdapter(Cursor cursor, DatabaseHelper_Hospitals db_hos, DatabaseHelper_Appointments db_app) {
-//        mCursorApp = cursor;
-//        mDb_hos = db_hos;
-//        mDb_app = db_app;
-//    }
-
-    public RVAdapter(ArrayList<AppointmentCard> list, DatabaseHelper_Appointments mDb_app){
+    RVAdapter(ArrayList<AppointmentCard> list, DatabaseHelper_Appointments mDb_app){
         this.mArrayList = list;
         this.mDb_app = mDb_app;
     }
@@ -45,7 +36,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewholder> {
     }
 
     // change appointment details
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 
@@ -122,9 +113,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewholder> {
 //    }
 
     @Override
-    public void onBindViewHolder(@NonNull RVViewholder holder, final int position){
+    public void onBindViewHolder(@NonNull final RVViewholder holder, final int position){
         final AppointmentCard currentCard = mArrayList.get(position);
-
+        holder.itemView.setTag(currentCard.getmAppointmentId());
         holder.mHospitalName.setText(currentCard.getHosName());
         holder.mCity.setText(currentCard.getCityName());
         holder.mStartingTime.setText(currentCard.getmStartingTime());
@@ -133,10 +124,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewholder> {
         holder.mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDb_app.removeItem(currentCard.getmAppointmentId());
+                mDb_app.removeItem((String) holder.itemView.getTag());
             }
         });
-        holder.itemView.setTag(currentCard.getmAppointmentId());
+
 
     }
 
