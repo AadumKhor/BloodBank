@@ -78,7 +78,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Result result = db.updateData(id.trim(), name_edit.getText().toString().trim(), phone_edit.getText().toString().trim(),
-                        String.valueOf(radio_group.getCheckedRadioButtonId()), age_edit.getText().toString().trim(),
+                        mRadio.isChecked() ? "Male" : "Female", age_edit.getText().toString().trim(),
                         weight_dropdown.getSelectedItem().toString().trim(),
                         bloodGroup_dropdown.getSelectedItem().toString().trim(),
                         city_edit.getText().toString().trim()
@@ -115,20 +115,21 @@ public class ProfileFragment extends Fragment {
                     bgPos = i;
                 }
             }
-
-            for (int i = 0; i < weight_options.length; i++) {
-                if (blood_groups[i].equals(array[4])) {
-                    weightPos = i;
-                }
+            if (array[4].equals("Above 50kg")) {
+                weightPos = 1;
             }
 
             bloodGroup_dropdown.setSelection(bgPos);
             weight_dropdown.setSelection(weightPos);
 
+            Log.println(Log.DEBUG, "Gender", array[2]);
+
             if (array[2].equals("Male")) {
-                mRadio.setEnabled(true);
+                mRadio.setChecked(true);
+                fRadio.setChecked(false);
             } else {
-                fRadio.setEnabled(true);
+                fRadio.setChecked(true);
+                mRadio.setChecked(false);
             }
 
         }

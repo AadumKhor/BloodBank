@@ -23,15 +23,15 @@ import java.util.Objects;
 
 public class NearbyHospitalFragment extends Fragment {
     private DatabaseHelper_Hospitals db;
-    private Spinner dropdown;
+//    private Spinner dropdown;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.d_fragment_hospitals, container, false);
-        dropdown = root.findViewById(R.id.dropdown);
+//        dropdown = root.findViewById(R.id.dropdown);
         db = new DatabaseHelper_Hospitals(getContext());
         NhRvAdapter mAdapter = new NhRvAdapter(db.viewData());
-        createDropDownList();
+//        createDropDownList();
         buildRecyclerView(root, mAdapter);
         return root;
     }
@@ -61,10 +61,10 @@ public class NearbyHospitalFragment extends Fragment {
         });
     }
 
-    private void createDropDownList() {
-        String[] mock_items = new String[]{"All", "Delhi", "Mumbai", "Jakarta", "New York"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, mock_items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dropdown.setAdapter(adapter);
-    }
+//    private void createDropDownList() {
+//        String[] mock_items = new String[]{"All", "Dammam", "Khobar", "Qatif"};
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, mock_items);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        dropdown.setAdapter(adapter);
+//    }
 }

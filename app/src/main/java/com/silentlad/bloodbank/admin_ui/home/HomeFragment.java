@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         mAdapter = new NhRvAdapter(db.viewData());
 
         // create the dropdown
-        createDropDownList(root);
+//        createDropDownList(root);
         buildRecyclerView(root, mAdapter);
         return root;
     }
@@ -74,13 +74,13 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         });
     }
 
-    private void createDropDownList(View root) {
-        Spinner dropDown = root.findViewById(R.id.dropdown);
-        // add a list of items to it for mock
-        String[] mock_items = new String[]{"All", "Delhi", "Mumbai", "Jakarta", "New York"};
-        // basic adapter to display items
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, mock_items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dropDown.setAdapter(adapter);
-    }
+//    private void createDropDownList(View root) {
+//        Spinner dropDown = root.findViewById(R.id.dropdown);
+//        // add a list of items to it for mock
+//        String[] mock_items = new String[]{"All", "Dammam", "Khobar", "Qatif"};
+//        // basic adapter to display items
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, mock_items);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        dropDown.setAdapter(adapter);
+//    }
 }

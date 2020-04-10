@@ -18,6 +18,7 @@
         <activity android:name=".admin_ui.ChangeHospitalInfo"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
+            android:label="Update Hospital Info"
             tools:ignore="LockedOrientationActivity"
             />
         <activity android:name=".donor_ui.FixAppointment"

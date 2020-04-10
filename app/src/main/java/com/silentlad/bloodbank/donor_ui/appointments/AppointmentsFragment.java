@@ -108,7 +108,6 @@ public class AppointmentsFragment extends Fragment {
 
     private void createList() {
         Cursor cursor_app = db_app.getData(userId);
-//        String appId , hosId , time , date ;
 
         if (cursor_app.getCount() != 0) {
             while (cursor_app.moveToNext()) {

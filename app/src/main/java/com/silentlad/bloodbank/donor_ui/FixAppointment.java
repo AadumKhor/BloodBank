@@ -171,7 +171,7 @@ public class FixAppointment extends AppCompatActivity {
         String startTime = getIntent().getStringExtra("startTime");
         String endTime = getIntent().getStringExtra("endTime");
         @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.US);
         assert startTime != null;
         assert endTime != null;
         int difference = Integer.parseInt(endTime) - Integer.parseInt(startTime);
@@ -189,7 +189,7 @@ public class FixAppointment extends AppCompatActivity {
         ArrayList<String> timeList = new ArrayList<>();
         timeList.add(0, sTime.split(" ")[3]);
 //        timeList.add(difference-1, endTime);
-        for (int i = 1; i <= difference - 2; i++) {
+        for (int i = 1; i <= difference ; i++) {
             startTime = startTime.replace(":00:00", "");
             int tempTime = Integer.parseInt(startTime) + i;
             int tempTimeHalf = Integer.parseInt(startTime) + (i-1);
@@ -199,10 +199,7 @@ public class FixAppointment extends AppCompatActivity {
                 timeList.add(String.valueOf(tempTimeHalf).concat(":30:00"));
             }
             timeList.add(String.valueOf(tempTime).concat(":00:00"));
-
         }
-        timeList.add(difference - 1, eTime.split(" ")[3]);
-//        Log.println(Log.DEBUG, "time", String.valueOf(timeList.size()));
 
         dropDown_time = findViewById(R.id.fix_app_s1);
 //        // basic adapter to display items
